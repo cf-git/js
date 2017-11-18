@@ -3,19 +3,21 @@
  * https://github.com/
  * Copyright 2017 CF<is.captain.fail@gmail.com>
  * Released under the MIT license
+ * Milestone: B1
+ * Version: 0.13
  */
 
 let keyMap = {
-    "8": "BackSpace",
+    "8": ["BackSpace", "backspace", "backSpace"],
     "9": "Tab",
     "13": "Enter",
     "16": "Shift",
     "17": "Ctrl",
     "18": "Alt",
-    "19": "Pause",
-    "20": "CapsLock",
-    "27": "Esc",
-    "32": "пробел",
+    "19": ["Pause", "Break"],
+    "20": ["CapsLock", "Caps"],
+    "27": ["Esc", "Escape"],
+    "32": ["Space", "Пробел"],
     "33": "PageUp",
     "34": "PageDown",
     "35": "End",
@@ -96,21 +98,21 @@ let keyMap = {
     "121": "F10",
     "122": "F11",
     "123": "F12",
-    "144": "NumLock",
-    "145": "ScrollLock",
+    "144": ["NumLock", "Num"],
+    "145": ["ScrollLock"],
     "154": "PrintScreen",
     "157": "Meta",
 
 
-    "186": ";",
-    "187": "=",
-    "188": ",",
-    "189": "-",
-    "190": ".",
-    "191": "/",
-    "192": "~",
+    "186": [";", "Semicolon"],
+    "187": ["=", "Equal"],
+    "188": [",", "Coma"],
+    "189": ["-", "Minus"],
+    "190": [".", "Point"],
+    "191": ["/", "Slash"],
+    "192": ["~", "Tilde"],
     "219": "[",
-    "220": "\\",
+    "220": ["\\", "BackSlash"],
     "221": "]",
     "222": "'"
 };
@@ -119,24 +121,32 @@ jQuery.fn.extend({
         this.each(function (i, t) {
             let $this = $(t);
             $this.off('keydown.keyMap').on('keydown.keyMap', function (e) {
-                let name = keyMap[e.keyCode];
-                if (e.shiftKey) {
-                    name = 'Shift' + name;
+                EQ = keyMap[e.keyCode];
+                if (!$.isArray(EQ)) {
+                    EQ = [EQ];
                 }
-                if (e.ctrlKey) {
-                    name = 'Ctrl' + name;
-                }
-                if (e.altKey) {
-                    name = 'Alt' + name;
-                }
-                if (name !== keyMap[e.keyCode]) {
-                    name = name[0].toUpperCase() + name.substring(1)
-                }
-                if (name !== undefined) {
-                    $this.trigger(name);
+                for (
+                    let i = 0, il = EQ.length, name = EQ[0];
+                    i < il;
+                    name = EQ[++i]
+                ) {
+                    if (e.shiftKey && keyMap[e.keyCode] !== 'Shift') {
+                        name = 'Shift' + name;
+                    }
+                    if (e.ctrlKey && keyMap[e.keyCode] !== 'Ctrl') {
+                        name = 'Ctrl' + name;
+                    }
+                    if (e.altKey && keyMap[e.keyCode] !== 'Alt') {
+                        name = 'Alt' + name;
+                    }
+                    if (name !== keyMap[e.keyCode]) {
+                        name = name[0].toUpperCase() + name.substring(1)
+                    }
+                    if (name !== undefined) {
+                        $this.trigger(name);
+                    }
                 }
             });
         });
-    },
+    }
 });
-jQuery.keyMap();
