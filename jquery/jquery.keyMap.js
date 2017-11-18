@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * jQuery Key Map plugin
  * https://github.com/
  * Copyright 2017 CF<is.captain.fail@gmail.com>
@@ -65,8 +65,8 @@ let keyMap = {
 
     "89": "Y",
     "90": "Z",
-    "91": "leftWindows",
-    "92": "rightWindows",
+    "91": "LeftWindows",
+    "92": "RightWindows",
     "93": "Applications",
     "96": "NumPad0",
     "97": "NumPad1",
